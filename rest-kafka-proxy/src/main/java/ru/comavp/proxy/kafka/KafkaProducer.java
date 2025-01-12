@@ -2,12 +2,13 @@ package ru.comavp.proxy.kafka;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import reactor.core.publisher.Mono;
+import ru.comavp.proxy.dto.TestRequest;
 
-import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 
-@Service
+@Component
 public class KafkaProducer {
 
     @Autowired
@@ -19,10 +20,10 @@ public class KafkaProducer {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    @PostConstruct
-    public void init() {
-        String message = "TestMessage_" + LocalDateTime.now();
+    public Mono<Void> sendMessage(TestRequest testRequest) {
+        String message = testRequest.data() + "_" + LocalDateTime.now();
         System.out.println("Sending message: " + message);
         kafkaTemplate.send(producerProperties.getTopicName(), message);
+        return Mono.empty();
     }
 }
