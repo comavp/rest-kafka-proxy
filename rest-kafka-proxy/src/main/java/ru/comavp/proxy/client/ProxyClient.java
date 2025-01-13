@@ -5,8 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import ru.comavp.proxy.config.ProxyProperties;
-import ru.comavp.proxy.dto.TestRequest;
-import ru.comavp.proxy.dto.TestResponse;
 
 @Component
 public class ProxyClient {
@@ -20,11 +18,12 @@ public class ProxyClient {
         this.properties = properties;
     }
 
-    public Mono<TestResponse> redirectRequest(TestRequest testRequest) {
+    public Mono<String> redirectRequest(String requestToRedirect) {
         return webClient.post()
                 .uri(properties.getEndpoint())
-                .body(Mono.just(testRequest), TestRequest.class)
+                .header("Content-Type", "application/json")
+                .body(Mono.just(requestToRedirect), String.class)
                 .retrieve()
-                .bodyToMono(TestResponse.class);
+                .bodyToMono(String.class);
     }
 }

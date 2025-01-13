@@ -6,6 +6,6 @@ server:
   port: 8081
 
 kafka-producer:
-  enable: false
+  enable: true
   topic-name: REST.KAFKA.PROXY.TOPIC
   bootstrap-servers: localhost:9092

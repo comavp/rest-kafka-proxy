@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
-import ru.comavp.proxy.dto.TestRequest;
-import ru.comavp.proxy.dto.TestResponse;
 import ru.comavp.proxy.service.ProxyService;
 
 @RestController
@@ -22,8 +20,8 @@ public class ProxyController {
 
     private static final Logger log = LoggerFactory.getLogger(ProxyController.class);
 
-    @PostMapping("/send")
-    public Mono<ResponseEntity<TestResponse>> sendRequest(@RequestBody TestRequest testRequest) {
+    @PostMapping(value = "/send", produces = "application/json")
+    public Mono<ResponseEntity<String>> sendRequest(@RequestBody String testRequest) {
         log.info("Received request with body: {}", testRequest);
         return proxyService.sendRequest(testRequest)
                 .map(ResponseEntity::ok);
