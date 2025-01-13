@@ -1,3 +1,5 @@
 package ru.comavp.dto;
 
-public record TestRequest(String data) {}
+import java.util.Map;
+
+public record TestRequest(String data, Map<String, String> additionalFields) {}
