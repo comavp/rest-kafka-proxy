@@ -11,10 +11,14 @@ import ru.comavp.proxy.kafka.KafkaProducer;
 @Service
 public class ProxyService {
 
-    @Autowired
     private ProxyClient proxyClient;
-    @Autowired
     private KafkaProducer kafkaProducer;
+
+    @Autowired
+    public ProxyService(ProxyClient proxyClient, KafkaProducer kafkaProducer) {
+        this.proxyClient = proxyClient;
+        this.kafkaProducer = kafkaProducer;
+    }
 
     public Mono<TestResponse> sendRequest(TestRequest testRequest) {
         return proxyClient.redirectRequest(testRequest)

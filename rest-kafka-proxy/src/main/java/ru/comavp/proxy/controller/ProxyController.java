@@ -1,5 +1,7 @@
 package ru.comavp.proxy.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,9 +20,11 @@ public class ProxyController {
     @Autowired
     private ProxyService proxyService;
 
+    private static final Logger log = LoggerFactory.getLogger(ProxyController.class);
+
     @PostMapping("/send")
     public Mono<ResponseEntity<TestResponse>> sendRequest(@RequestBody TestRequest testRequest) {
-        System.out.println("Received request with body: " + testRequest);
+        log.info("Received request with body: {}", testRequest);
         return proxyService.sendRequest(testRequest)
                 .map(ResponseEntity::ok);
     }

@@ -7,6 +7,7 @@ public class ProducerProperties {
 
     private String topicName;
     private String bootstrapServers;
+    private Boolean enable = true;
 
     public String getTopicName() {
         return topicName;
@@ -22,5 +23,13 @@ public class ProducerProperties {
 
     public void setBootstrapServers(String bootstrapServers) {
         this.bootstrapServers = bootstrapServers;
+    }
+
+    public Boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(Boolean enable) {
+        this.enable = enable;
     }
 }

@@ -1,6 +1,11 @@
+proxy:
+  base-url: "http://localhost:8080"
+  endpoint: "/api/main-endpoint"
+
 server:
   port: 8081
 
 kafka-producer:
+  enable: false
   topic-name: REST.KAFKA.PROXY.TOPIC
   bootstrap-servers: localhost:9092
