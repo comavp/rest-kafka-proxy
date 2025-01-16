@@ -24,19 +24,30 @@ services:
       - zookeeper
     volumes:
       - ./:/etc/kafka
-  # rest-server:
-  #   image: rest-server
-  #   ports:
-  #     - "8080:8080"
-  # kafka-consumer:
-  #   image: kafka-consumer
-  # rest-kafka-proxy:
-  #   image: rest-kafka-proxy
-  #   ports:
-  #     - "8081:8081"
-  #   depends_on:
-  #     - kafka
-  #     - rest-server
-  #     - kafka-consumer
-
+  rest-server:
+    image: rest-server:1.0.0
+    ports:
+      - "8082:8082"
+    environment:
+      SERVER_PORT: 8082
+  kafka-consumer:
+    image: kafka-consumer:1.0.0
+    environment:
+      KAFKA_BOOTSTRAP_SERVERS: http://kafka:9093
+      TOPIC_NAME: REST.KAFKA.PROXY.TOPIC
+  rest-kafka-proxy:
+    image: rest-kafka-proxy:1.0.0
+    ports:
+      - "8081:8081"
+    environment:
+      BASE_URL: http://rest-server
+      BASE_PORT: 8082
+      ENDPOINT: /api/main-endpoint
+      KAFKA_PROXY_ENABLE: true
+      KAFKA_BOOTSTRAP_SERVERS: http://kafka:9093
+      TOPIC_NAME: REST.KAFKA.PROXY.TOPIC
+    depends_on:
+      - kafka
+      - rest-server
+      - kafka-consumer
 

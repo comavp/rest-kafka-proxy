@@ -1,0 +1,11 @@
+FROM openjdk:19-jdk-alpine
+
+ARG TOPIC_NAME
+ARG KAFKA_BOOTSTRAP_SERVERS
+ARG JAR_FILE=target/*.jar
+
+ENV TOPIC_NAME ${TOPIC_NAME}
+ENV KAFKA_BOOTSTRAP_SERVERS ${KAFKA_BOOTSTRAP_SERVERS}
+
+COPY ${JAR_FILE} kafka-consumer.jar
+ENTRYPOINT ["java", "-jar", "/kafka-consumer.jar"]
