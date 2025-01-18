@@ -43,10 +43,10 @@ services:
       BASE_URL: http://rest-server
       BASE_PORT: 8082
       ENDPOINT: /api/main-endpoint
-      KAFKA_PROXY_ENABLE: true
+      ENABLE_KAFKA_PROXY: true
       KAFKA_BOOTSTRAP_SERVERS: http://kafka:9093
       TOPIC_NAME: REST.KAFKA.PROXY.TOPIC
-      KAFKA_MESSAGE_MAPPER: false
+      ENABLE_KAFKA_MESSAGE_MAPPER: true
     depends_on:
       - kafka
       - rest-server

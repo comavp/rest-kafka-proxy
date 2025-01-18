@@ -6,10 +6,10 @@ server:
   port: ${server-port:8081}
 
 kafka-producer:
-  enable: ${kafka_proxy_enable:true}
+  enable: ${enable_kafka_proxy:true}
   topic-name: ${topic_name:REST.KAFKA.PROXY.TOPIC}
   bootstrap-servers: ${kafka_bootstrap_servers:localhost:9092}
 
 kafka-message-mapper:
-  enable: ${KAFKA_MESSAGE_MAPPER:true}
+  enable: ${enable_kafka_message_mapper:true}
   rules-file-name: rest-server-mapper.jslt
