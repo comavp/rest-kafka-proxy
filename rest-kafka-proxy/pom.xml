@@ -3,6 +3,11 @@
 
   <modelVersion>4.0.0</modelVersion>
 
+  <properties>
+    <maven.compiler.target>19</maven.compiler.target>
+    <maven.compiler.source>19</maven.compiler.source>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -47,8 +52,9 @@
     </dependency>
 
     <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
+      <groupId>com.schibsted.spt.data</groupId>
+      <artifactId>jslt</artifactId>
+      <version>0.1.14</version>
     </dependency>
   </dependencies>
 </project>

@@ -9,3 +9,7 @@ kafka-producer:
   enable: ${kafka_proxy_enable:true}
   topic-name: ${topic_name:REST.KAFKA.PROXY.TOPIC}
   bootstrap-servers: ${kafka_bootstrap_servers:localhost:9092}
+
+kafka-message-mapper:
+  enable: ${KAFKA_MESSAGE_MAPPER:true}
+  rules-file-name: rest-server-mapper.jslt

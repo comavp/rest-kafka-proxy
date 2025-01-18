@@ -1,28 +1,31 @@
 package ru.comavp.proxy.kafka;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Mono;
-import ru.comavp.proxy.dto.KafkaMessage;
+import ru.comavp.proxy.config.KafkaMessageMapperProperties;
+import ru.comavp.proxy.kafka.mapper.KafkaMessageMapper;
 
 @Component
 public class KafkaProducer {
 
     private KafkaTemplate<String, String> kafkaTemplate;
     private ProducerProperties producerProperties;
+    private KafkaMessageMapperProperties kafkaMessageMapperProperties;
+    private KafkaMessageMapper kafkaMessageMapper;
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().findAndRegisterModules();
     private static final Logger log = LoggerFactory.getLogger(KafkaProducer.class);
 
     @Autowired
-    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate, ProducerProperties producerProperties) {
+    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate, ProducerProperties producerProperties,
+                         KafkaMessageMapperProperties kafkaMessageMapperProperties, KafkaMessageMapper kafkaMessageMapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.producerProperties = producerProperties;
+        this.kafkaMessageMapperProperties = kafkaMessageMapperProperties;
+        this.kafkaMessageMapper = kafkaMessageMapper;
     }
 
     public void KafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
@@ -41,10 +44,10 @@ public class KafkaProducer {
     }
 
     private String buildKafkaMessage(String requestToRedirect) {
-        try {
-            return MAPPER.writeValueAsString(new KafkaMessage(requestToRedirect));
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
+        if (kafkaMessageMapperProperties.isEnable()) {
+            log.info("Mapping Kafka message");
+            return kafkaMessageMapper.map(requestToRedirect);
         }
+        return requestToRedirect;
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Configuration
-@EnableConfigurationProperties(ProxyProperties.class)
+@EnableConfigurationProperties({ProxyProperties.class, KafkaMessageMapperProperties.class})
 public class ProxyConfig {
 
     @Bean

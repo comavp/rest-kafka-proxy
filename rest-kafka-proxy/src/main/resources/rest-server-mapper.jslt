@@ -1,0 +1,5 @@
+{
+  "messageId" : uuid(),
+  "redirectTime" : format-time(now(), "yyyy-MM-dd'T'HH:mm:ss"),
+  "payload": .
+}

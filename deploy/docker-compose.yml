@@ -46,6 +46,7 @@ services:
       KAFKA_PROXY_ENABLE: true
       KAFKA_BOOTSTRAP_SERVERS: http://kafka:9093
       TOPIC_NAME: REST.KAFKA.PROXY.TOPIC
+      KAFKA_MESSAGE_MAPPER: false
     depends_on:
       - kafka
       - rest-server
